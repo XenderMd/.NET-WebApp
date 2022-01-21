@@ -8,6 +8,7 @@ namespace DutchTreat.Controllers
 {
     public class AppController:Controller
     {
+        
         public IActionResult Index()
         {
             return View();
@@ -16,10 +17,18 @@ namespace DutchTreat.Controllers
         [HttpGet("Contact")] //specify a non-default route 
         public IActionResult Contact()
         {
+
             ViewBag.Title = "Contact Us";
-            throw new InvalidOperationException("Something happened");
             return View();
         }
+
+        [HttpPost("Contact")]
+        public IActionResult Contact(object model)
+        {
+            ViewBag.Title = "Contact Us";
+            return View();
+        }
+
 
         public IActionResult About()
         {
