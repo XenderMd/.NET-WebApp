@@ -26,6 +26,10 @@ namespace DutchTreat.Controllers
         [HttpPost("Contact")]
         public IActionResult Contact(ContactViewModel model)
         {
+            if(ModelState.IsValid)
+            {
+                //send email
+            }
             ViewBag.Title = "Contact Us";
             return View();
         }
