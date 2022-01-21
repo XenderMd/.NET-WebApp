@@ -13,10 +13,11 @@ namespace DutchTreat.Controllers
             return View();
         }
 
-        [HttpGet("Contact")]
+        [HttpGet("Contact")] //specify a non-default route 
         public IActionResult Contact()
         {
             ViewBag.Title = "Contact Us";
+            throw new InvalidOperationException("Something happened");
             return View();
         }
 
