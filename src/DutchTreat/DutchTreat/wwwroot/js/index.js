@@ -1,13 +1,16 @@
 ﻿
-let form = document.getElementById('form');
-form.hidden = true;
+let form = $("#form");
+form.hide();
 
 
-let button = document.getElementById('buyButton');
+let button = $("buyButton");
 if (button) {
-	button.addEventListener("click", (event) => { console.log(event);});
+	button.on("click", (event) => { console.log(event);});
 };
 
-let productInfo = document.getElementsByClassName('product-props');
-let listItems = productInfo.item[0].children;
+let listItems = $(".product-props li");
+listItems.on("click", (event) => {
+	console.log("You clicked on " + event.target.innerText);
+});
+
 	
