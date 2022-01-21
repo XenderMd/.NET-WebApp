@@ -11,8 +11,4 @@
     <None Remove="wwwroot\css - Copy\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\index.html" />
-  </ItemGroup>
-
 </Project>
