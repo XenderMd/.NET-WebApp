@@ -15,3 +15,11 @@ body {
 label {
     font-size: 16px;
 }
+
+#form{
+    background-color:lightgray;
+}
+
+#form input[type=submit]{
+    background-color:lightgreen;
+}
