@@ -1,5 +1,4 @@
 ﻿
-
 $(document).ready(() => {
 
 	let form = $("#form");
