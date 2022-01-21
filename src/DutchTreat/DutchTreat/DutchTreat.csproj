@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css - Copy\**" />
+    <Content Remove="wwwroot\css - Copy\**" />
+    <EmbeddedResource Remove="wwwroot\css - Copy\**" />
+    <None Remove="wwwroot\css - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\index.html" />
   </ItemGroup>
 

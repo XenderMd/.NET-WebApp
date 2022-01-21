@@ -1,0 +1,17 @@
+﻿
+input, textarea {
+    font-size: 18px;
+    width: 200px;
+}
+
+input[type=submit]{
+    width:auto;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+label {
+    font-size: 16px;
+}
