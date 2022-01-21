@@ -70,3 +70,15 @@ ul.product-props li{
 .popupForm input[type=checkbox], .popupForm input[type=submit]{
     width:auto;
 }
+
+menu li{
+   display:inline;
+}
+
+menu li::after{
+    content:" |";
+}
+
+menu li:last-of-type::after{
+    content:"";
+}
