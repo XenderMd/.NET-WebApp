@@ -48,3 +48,25 @@ ul.product-props li{
     border: 1px solid black;
     max-width: 150px;
 }
+
+#loginToggle {
+    cursor: pointer;
+}
+.popupForm{
+       padding:5px;
+       border: 2px black inset;
+       display:inline-block;
+}
+
+.popupForm input{
+    width: 200px;
+}
+
+.popupForm label{
+    width:150px;
+    display:inline-block;
+}
+
+.popupForm input[type=checkbox], .popupForm input[type=submit]{
+    width:auto;
+}
