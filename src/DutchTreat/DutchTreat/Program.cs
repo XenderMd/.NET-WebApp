@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,9 +19,18 @@ namespace DutchTreat
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(AddConfiguration)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void AddConfiguration(HostBuilderContext ctx, IConfigurationBuilder bldr)
+        {
+            bldr.Sources.Clear();
+            bldr.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json")
+                .AddEnvironmentVariables();
+        }
     }
 }
