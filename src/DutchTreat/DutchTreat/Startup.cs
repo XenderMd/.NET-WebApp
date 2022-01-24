@@ -20,6 +20,8 @@ namespace DutchTreat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DutchContext>();
+            services.AddTransient<DutchSeeder>();
+            services.AddScoped<IDutchRepository, DutchRepository>();
             services.AddTransient<IMailService, NullMailService>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
