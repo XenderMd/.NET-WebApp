@@ -2,7 +2,21 @@
 <h1>Shop</h1>
 <p>@Model.Count()</p>
 
-@foreach(var p in Model)
-            {
-                <li>@p.Title</li>
-            }
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-3">
+            <div class="border bg-light rounder p-1">
+                <img class="img-fluid" src="~/img/@(p.ArtId).jpg" alt="@p.Title"/>
+                <h3>@p.Category - @p.Size</h3>
+                <ul>
+                    <li>Price @p.Price</li>
+                    <li>Artist: @p.Artist</li>
+                    <li>Title: @p.Title</li>
+                    <li>Description: @p.ArtDescription</li>
+                </ul>
+                <button id="buyButton" class="btn btn-success">Buy</button>
+            </div>
+        </div>
+    }
+</div>
