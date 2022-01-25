@@ -24,12 +24,19 @@ namespace DutchTreat.Data
             _context.Add(model);
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
         {
-            return _context.Orders
-                            .Include(o=>o.Items)
-                            .ThenInclude(item=>item.Product)
+            if (includeItems)
+            {
+                return _context.Orders
+                            .Include(o => o.Items)
+                            .ThenInclude(item => item.Product)
                             .ToList();
+            }
+            else
+            {
+                return _context.Orders.ToList();
+            }
         }
 
         public IEnumerable<Product> GetAllProducts()
@@ -44,15 +51,15 @@ namespace DutchTreat.Data
                 _logger.LogError($"Failed to get all products:{ex}");
                 return null;
             }
-            
+
         }
 
         public Order GetOrderById(int id)
         {
             return _context.Orders
                             .Where(order => order.Id == id)
-                            .Include(order=>order.Items)
-                            .ThenInclude(item=>item.Product)
+                            .Include(order => order.Items)
+                            .ThenInclude(item => item.Product)
                             .FirstOrDefault();
         }
 
@@ -63,7 +70,7 @@ namespace DutchTreat.Data
 
         public bool SaveAll()
         {
-            return _context.SaveChanges()>0;
+            return _context.SaveChanges() > 0;
         }
     }
 }
