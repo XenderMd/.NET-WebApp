@@ -1,5 +1,6 @@
 ﻿using DutchTreat.Data;
 using DutchTreat.Data.Entities;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace DutchTreat.Controllers
 {
     [Route("api/[Controller]")]
-    public class OrdersController:Controller
+    public class OrdersController : Controller
     {
         private readonly IDutchRepository _repository;
         private readonly ILogger _logger;
@@ -30,7 +31,6 @@ namespace DutchTreat.Controllers
             }
             catch (Exception ex)
             {
-
                 _logger.LogError($"Failed to get orders: {ex}");
                 return BadRequest("Failed to get orders");
             }
@@ -45,11 +45,12 @@ namespace DutchTreat.Controllers
                 if (order != null)
                 {
                     return Ok(order);
-                } else
+                }
+                else
                 {
                     return NotFound();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -60,18 +61,44 @@ namespace DutchTreat.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Order model)
+        public IActionResult Post([FromBody] OrderViewModel model)
         {
             //add it to the database
             try
             {
-                _repository.AddEntity(model);
-                if (_repository.SaveAll())
+                if (ModelState.IsValid)
                 {
-                    return Created($"/api/orders/{model.Id}", model);
+                    var newOrder = new Order
+                    {
+                        OrderDate = model.OrderDate,
+                        OrderNumber = model.OrderNumber,
+                        Id = model.OrderId
+                    };
+
+                    if (newOrder.OrderDate == DateTime.MinValue)
+                    {
+                        newOrder.OrderDate = DateTime.Now;
+                    }
+
+                    _repository.AddEntity(newOrder);
+
+                    if (_repository.SaveAll())
+                    {
+                        var viewModel = new OrderViewModel
+                        {
+                            OrderId = newOrder.Id,
+                            OrderDate = newOrder.OrderDate,
+                            OrderNumber = newOrder.OrderNumber
+                        };
+                        return Created($"/api/orders/{viewModel.OrderId}", viewModel);
+                    }
+                    else
+                    {
+                        return BadRequest(ModelState);
+                    }
                 } else
                 {
-                    return BadRequest("Failed to save a new order");
+                    return BadRequest(ModelState);
                 }
             }
             catch (Exception ex)
@@ -79,7 +106,7 @@ namespace DutchTreat.Controllers
                 _logger.LogError($"Failed to save a new order: {ex}");
                 return BadRequest("Failed to save a new order");
             }
-           
+
         }
     }
 }
