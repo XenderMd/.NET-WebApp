@@ -1,0 +1,41 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title="Login";
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+}
+
+
+<div class="row mt-4 mb-4">
+    <div class="col-md-4 offset-md-4">
+        <div class="card card-body bg-light">
+            <form>
+
+                <lable asp-for="Username">UserName</lable>
+                <div class="input-group mb-2">
+                    <input asp-for="Username" class="form-control"/>
+                    <span asp-validation-for="Username" class="text-warning"></span>
+                </div>
+
+                <lable asp-for="Password">Password</lable>
+                <div class="input-group mb-2">
+                    <input asp-for="Password" class="form-control"/>
+                    <span asp-validation-for="Password" class="text-warning"></span>
+                </div>
+                <div class="input-group mb-2">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                    </div>
+                    <lable asp-for="RememberMe">Remember Me?</lable>
+                    <span asp-validation-for="RememberMe" class="text-warning"></span>
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
