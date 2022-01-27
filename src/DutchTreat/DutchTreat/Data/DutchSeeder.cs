@@ -1,5 +1,6 @@
 ﻿using DutchTreat.Data.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,16 +14,37 @@ namespace DutchTreat.Data
     {
         private readonly DutchContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<StoreUser> _userManager;
 
-        public DutchSeeder(DutchContext context, IWebHostEnvironment env)
+        public DutchSeeder(DutchContext context, IWebHostEnvironment env, UserManager<StoreUser> userManager)
         {
-            this._context = context;
-            this._env = env;
+            _context = context;
+            _env = env;
+            _userManager = userManager;
         }
 
-        public void Seed()
+        public async Task SeedAsync()
         {
             _context.Database.EnsureCreated();
+
+            StoreUser user = await _userManager.FindByEmailAsync("denis.stavilamd@gmail.com");
+            if (user == null)
+            {
+                user = new StoreUser()
+                {
+                    FirstName = "Denis",
+                    LastName = "Stavila",
+                    Email = "denis.stavilamd@gmail.com",
+                    UserName = "denis.stavilamd@gmail.com"
+                };
+
+                var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder !");
+                }
+            }
+
             if (!_context.Products.Any())
             {
                 //Need to create sample data
@@ -30,6 +52,7 @@ namespace DutchTreat.Data
                 var json = File.ReadAllText(filePath);
                 var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
                 _context.Products.AddRange(products);
+
                 var order = new Order()
                 {
                     OrderDate = DateTime.Today,
@@ -38,12 +61,12 @@ namespace DutchTreat.Data
                     {
                         new OrderItem()
                         {
-                            Product=products.First(),
-                            Quantity=5,
-                            UnitPrice=products.First().Price
+                            Product = products.First(),
+                            Quantity = 5,
+                            UnitPrice = products.First().Price
                         }
-                    }
-
+                    },
+                    User = user
                 };
 
                 _context.Orders.Add(order);
