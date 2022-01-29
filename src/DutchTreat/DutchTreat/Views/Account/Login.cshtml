@@ -11,8 +11,9 @@
 
 <div class="row mt-4 mb-4">
     <div class="col-md-4 offset-md-4">
+        <div asp-validation-summary="ModelOnly"></div>
         <div class="card card-body bg-light">
-            <form>
+            <form method="post">
 
                 <lable asp-for="Username">UserName</lable>
                 <div class="input-group mb-2">
@@ -22,7 +23,7 @@
 
                 <lable asp-for="Password">Password</lable>
                 <div class="input-group mb-2">
-                    <input asp-for="Password" class="form-control"/>
+                    <input type="password" asp-for="Password" class="form-control"/>
                     <span asp-validation-for="Password" class="text-warning"></span>
                 </div>
                 <div class="input-group mb-2">
