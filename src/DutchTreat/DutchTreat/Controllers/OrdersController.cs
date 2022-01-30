@@ -34,9 +34,10 @@ namespace DutchTreat.Controllers
         [HttpGet]
         public IActionResult Get(bool includeItems=true)
         {
+            var username = User.Identity.Name;
             try
             {
-                var result = _repository.GetAllOrders(includeItems);
+                var result = _repository.GetAllOrdersByUser(username, includeItems);
                 return Ok(_mapper.Map<IEnumerable<OrderViewModel>>(result));
                 //return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(result));
             }
@@ -52,7 +53,7 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var order = _repository.GetOrderById(id);
+                var order = _repository.GetOrderById(id, User.Identity.Name);
                 if (order != null)
                 {
                     return Ok(_mapper.Map<Order, OrderViewModel>(order));
